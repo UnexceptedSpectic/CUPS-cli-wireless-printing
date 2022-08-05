@@ -10,6 +10,9 @@ echo
 echo "If script does not exit with the message 'Success!', something went wrong"
 echo
 
+#update package index
+sudo apt update && sudo apt upgrade -y
+
 #package installation; last two prevent 'filter failed' error - read more at https://wiki.archlinux.org/index.php/CUPS/Troubleshooting#CUPS:_.22Filter_failed.22
 sudo apt install cups foomatic-db-compressed-ppds jq -y
 
@@ -38,6 +41,15 @@ sudo sed -i "/${pattern}/a${replace}" /etc/cups/cupsd.conf
 #restart avahi and CUPS
 sudo systemctl restart avahi-daemon
 sudo systemctl restart cups.service
+
+#add airprint support
+sudo apt install -y python3 python3-pip virtualenv
+cd ~ && mkdir airprint_install && cd airprint_install
+wget https://raw.githubusercontent.com/UnexceptedSpectic/airprint-generate/master/airprint-generate.py
+virtualenv -p python3 env
+. env/bin/activate
+pip install pycups
+python airprint-generate.py -d /etc/avahi/services
 
 #el fin de la comedia
 echo
