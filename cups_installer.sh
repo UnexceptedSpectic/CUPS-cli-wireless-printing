@@ -43,6 +43,8 @@ sudo systemctl restart avahi-daemon
 sudo systemctl restart cups.service
 
 #add airprint support
+# https://wiki.archlinux.org/title/avahi
+# https://wiki.debian.org/CUPSAirPrint
 sudo apt install -y python3 python3-pip virtualenv
 cd ~ && mkdir airprint_install && cd airprint_install
 wget https://raw.githubusercontent.com/UnexceptedSpectic/airprint-generate/master/airprint-generate.py
